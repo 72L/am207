@@ -43,15 +43,23 @@
 <h4>What did I do?</h4>
 <p>In this project, I use Genetic Programming to generate and evaluate trading strategies on individual S&P 500 stock tickers. Perhaps an approach that uses customized strategies for each stock in a portfolio will be able to better exploit market inefficiencies (and therefore achieve better returns) compared to a strategy that trades solely with the entire index.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
 
 <h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<a name="data" class="anchor" href="#data"><span class="octicon octicon-link"></span></a>Data</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Historical daily adjusted closing prices and volumes from years 1999 to 2013 of stocks in the S&P 500 were downloaded from Yahoo! Finance. Only stocks with at least 15 years of history available on Yahoo! Finance were considered (n = 312). This allowed splitting of the time series data into a 10-year training set (1999 to 2008) and a 5-year test set (2009 to 2013). </p>
+<p>The Global Industry Classification Standard (GICS) sector labels given to each ticker were used for sector analysis. Our data set of 312 tickers contained 48 tickers from the Financials sector, 47 from Industrials, 42 from Consumer Discretionary, 34 from Health Care, 33 from Information Technology, 28 from Consumer Staples, 27 from Energy, 26 from Utilities, 23 from Materials, and 4 from Telecommunications Services. </p>
+
+
+
+<h3>
+<a name="approach" class="anchor" href="#approach"><span class="octicon octicon-link"></span></a>Approach</h3>
+
+<h4>Trading Strategy Tree Representation</h4>
+<p>A trading strategy is composed of two trees: one that encodes the buy signals and one that encodes the sell signals. For example, a possible trading strategy using Bollinger Bands [12] is represented by the two trees in the figure below. A sell signal is generated when the sell tree returns true. That is, the investor will sell when the price falls below the lower bollinger band, which is calculated as MA(20) - 2*SD(20) , where MA(x)  and SD(x) are the x-day moving window average and standard deviation, respectively. Similarly, a buy signal is generated when the price rises above the upper bollinger band, calculated as MA(20) + 2*SD(20).</p>
+
+<img src="./images/fig1.png"/>
 
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
