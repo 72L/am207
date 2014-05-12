@@ -20,9 +20,8 @@
         
         <ol style="list-style: none;">
           <li><a href="#intro-and-theory">Introduction and Theory</a></li>
-          <li><a href="#data">Data</a></li>
-          <li><a href="#approach">Approach</a></li>
           <li><a href="#results">Results</a></li>
+          <li><a href="#approach">Approach</a></li>
           <li><a href="#conc">Conclusions and Future Directions</a></li>
           <li><a href="#refs">References</a></li>
         </ol>
@@ -37,30 +36,23 @@
 
 <h4>What are Trading Strategies?</h4>
 
-<p><span class="lead">Technical trading strategies are used to determine buy and sell signals based on time series stock data.</span><br/> Trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. Typical indicators are moving average, momentum, and standard deviation. 
+<p class="lead">Technical trading strategies are used to determine buy and sell signals based on time series stock data.</p><p> Trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. Typical indicators are moving average, momentum, and standard deviation. 
 </p>
 
 <p>Strictly speaking, technical trading strategies do not predict future prices. Rather, indicators are used to generate buy/sell signals in real time with present and historical data.</p>
 
 <h4>Motivation</h4>
-<p><span class="lead">Common trading strategies have some heuristic rationalization but successful trading rules should not be limited by human intuition or experience.</span><br/> This project addresses whether new, unintuitive, and profitable trading strategies can be discovered with a stochastic algorithm called genetic programming. New strategies generated this way may perhaps capture underlying, yet unknown trends in the market.</p>
+<p class="lead">Common trading strategies have some heuristic rationalization but successful trading rules should not be limited by human intuition or experience.</p><p> This project addresses whether new, unintuitive, and profitable trading strategies can be discovered with a stochastic algorithm called genetic programming. New strategies generated this way may perhaps capture underlying, yet unknown trends in the market.</p>
 
 <h4>What is Genetic Programming?</h4>
 <p>Genetic algorithms optimize a fitness function by simulating natural selection. Members of a population, which represent candidate solutions, are mutated randomly over time. At each time step or generation, each member is given probability to reproduce clones proportional to their respective fitness. If designed well, over time, the population will achieve higher and higher fitness, eventually reaching the optimal point of the fitness function. </p>
 
-<p><span class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</span><br/> Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
+<p class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</p><p> Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
 
 <p>Genetic programming has been used extensively in the field of finance to generate and evaluate trading strategies, which are easily represented as trees (see below). GP has been used to generate trading strategies for US indices (S&P500 and Dow Jones Index) [6, 7, 8], Foreign exchange markets [9, 10], and individual Canadian stocks [11]. These studies were not able to obtain rules that provided consistent returns on a risk-adjusted basis, especially with transaction costs.</p>
 
 <h4>What did I do?</h4>
 <p>In this project, I use Genetic Programming to generate and evaluate trading strategies on individual S&P 500 stock tickers. Perhaps an approach that uses customized strategies for each stock in a portfolio will be able to better exploit market inefficiencies (and therefore achieve better returns) compared to a strategy that trades solely with the entire index.</p>
-
-
-
-<h3>
-<a name="data" class="anchor" href="#data"><span class="octicon octicon-link"></span></a>Data</h3>
-
-<p>Historical daily adjusted closing prices and volumes from years 1999 to 2013 of stocks in the S&P 500 were downloaded from Yahoo! Finance. Only stocks with at least 15 years of history available on Yahoo! Finance were considered (n = 312). This allowed splitting of the time series data into a 10-year training set (1999 to 2008) and a 5-year test set (2009 to 2013). </p>
 
 <h3>
 <a name="results" class="anchor" href="#results"><span class="octicon octicon-link"></span></a>Results</h3>
@@ -79,32 +71,32 @@
 
 <h4>Returns by Sector</h4>
 <p class="lead">Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies</p>
-<p>Stock tickers were classified into sectors based on the GICS classification scheme. Figure 6 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
+<p>Stock tickers were classified into sectors based on the GICS classification scheme. Figure 1 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940867/3166e438-d991-11e3-8c28-52b04f4f2903.png"style="display: block;
     margin-left: auto;
     margin-right: auto"/>
     <small>
-      <strong>Figure 6. Annualized adjusted excess returns from stocks in each GICS sector.</strong> A kernel density estimate of the distribution is plotted, along with the actual returns from each ticker. Market inefficiency in each sector can be approximated by determining the extent to which the distribution is above the  0% return mark.     </small>
+      <strong>Figure 1. Annualized adjusted excess returns from stocks in each GICS sector.</strong> A kernel density estimate of the distribution is plotted, along with the actual returns from each ticker. Market inefficiency in each sector can be approximated by determining the extent to which the distribution is above the  0% return mark.     </small>
   
   
 <h4>Comparing the Trading Strategies</h4>
 <p class="lead">The most freqeuncy used indicators are volume-based.</p>
-<p>312 trading strategies (from 312 stock tickers), each with buy and sell signal-generating trees, were generated from the GP algorithms. The indicators that ended up being incorporated into the optimal buy and sell trees were compiled and counted (Figure 7). Interestingly, the volume lag indicators for 5, 13, and 33 days were very frequency used in sell trees, while the most frequently used indicators in the buy trees are volume SD(33) and price MA(13). Note that although the operations performed on these indicators higher up in the tree could be different, the fact that these are used frequently may be an indication of their usefulness. These specific indicators (which are surprisingly mostly based on volume) appear to hold the most information in terms of discovering market inefficiencies to exploit. </p>
+<p>312 trading strategies (from 312 stock tickers), each with buy and sell signal-generating trees, were generated from the GP algorithms. The indicators that ended up being incorporated into the optimal buy and sell trees were compiled and counted (Figure 2). Interestingly, the volume lag indicators for 5, 13, and 33 days were very frequency used in sell trees, while the most frequently used indicators in the buy trees are volume SD(33) and price MA(13). Note that although the operations performed on these indicators higher up in the tree could be different, the fact that these are used frequently may be an indication of their usefulness. These specific indicators (which are surprisingly mostly based on volume) appear to hold the most information in terms of discovering market inefficiencies to exploit. </p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940864/315f9da4-d991-11e3-8ea0-06ea1b1f0cf5.png"style="display: block;
     margin-left: auto;
     margin-right: auto"/>
-    <smaLL><STRONG>Figure 7. The frequency of indicator use in buy and sell trees.</strong> Each point represents a specific indicator over a specific moving window length. The colors indicate the type of indicator, such as MA, or SD. The most highly used indicators are labeled with their specific descriptions. </smaLL>
+    <smaLL><STRONG>Figure 2. The frequency of indicator use in buy and sell trees.</strong> Each point represents a specific indicator over a specific moving window length. The colors indicate the type of indicator, such as MA, or SD. The most highly used indicators are labeled with their specific descriptions. </smaLL>
 
 <h4>Broad tree classification</h4>
 <p class="lead">Buy and sell trees do not appear to cluster be sector or profitability.</p>
-<p>Since the trees varied in size, operations used, and indicators used, a simple, 1D similarity score was developed (see Approach section) to functionally compare the trees. Briefly, for each pairwise comparison of trees in the dataset, the similarity score was calculated using the buy/sell signals they generated on 41 years of S&P 500 price data. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 8). A graph was produced for the sell trees as well (not shown) and it was very similar. </p>
+<p>Since the trees varied in size, operations used, and indicators used, a simple, 1D similarity score was developed (see Approach section) to functionally compare the trees. Briefly, for each pairwise comparison of trees in the dataset, the similarity score was calculated using the buy/sell signals they generated on 41 years of S&P 500 price data. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 3). A graph was produced for the sell trees as well (not shown) and it was very similar. </p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940862/315a213a-d991-11e3-8f26-56106826a3f7.png"style="display: block;
     margin-left: auto;
     margin-right: auto"/>
-    <small><strong>Figure 8. Graph of buy trees linked by similarity.</strong> Each of the 312 nodes represent a stock ticker for which a buy tree was generated using GP. The weight of the edge represents how similar the trees are based on a similarity score (See Approach section). To better visualize clusters, edges with weights below 0.4 were eliminated from the graph. The size of each node represents the test period annualized adjusted return.</small>
+    <small><strong>Figure 3. Graph of buy trees linked by similarity.</strong> Each of the 312 nodes represent a stock ticker for which a buy tree was generated using GP. The weight of the edge represents how similar the trees are based on a similarity score (See Approach section). To better visualize clusters, edges with weights below 0.4 were eliminated from the graph. The size of each node represents the test period annualized adjusted return.</small>
     
 <p>At least six clusters of buy trees are observed, and it is assumed that each of these clusters represent functionally groups of different trading strategies. Each node/ticker is sized by the test period annualized adjusted return and colored by sector. Buy and sell trees do not appear to cluster by sector, suggesting that the trading strategies may be specific to each stock ticker, rather than generalizable to that ticker’s sector. To test the appropriateness of this clustering algorithm, future work should focus on comparing the performance of buy rules used on stocks within a cluster and that for stocks outside the cluster.</p>
 <p>Trees also do not appear to cluster by size, indicating that successful returns do not come solely from a particular class of trading strategies. Rather, each of the type of trading strategy represented by each cluster yields variable success rates, probably more dependent on individual tickers. </p>
@@ -115,16 +107,20 @@
 <h3>
 <a name="approach" class="anchor" href="#approach"><span class="octicon octicon-link"></span></a>Approach</h3>
 
+<h4>Data</h4>
+
+<p>Historical daily adjusted closing prices and volumes from years 1999 to 2013 of stocks in the S&P 500 were downloaded from Yahoo! Finance. Only stocks with at least 15 years of history available on Yahoo! Finance were considered (n = 312). This allowed splitting of the time series data into a 10-year training set (1999 to 2008) and a 5-year test set (2009 to 2013). </p>
+
 <h4>Trading Strategy Tree Representation</h4>
 <p>A trading strategy is composed of two trees: one that encodes the buy signals and one that encodes the sell signals. For example, a possible trading strategy using Bollinger Bands [12] is represented by the two trees in the figure below. A sell signal is generated when the sell tree returns true. That is, the investor will sell when the price falls below the lower bollinger band, which is calculated as MA(20) - 2*SD(20) , where MA(x)  and SD(x) are the x-day moving window average and standard deviation, respectively. Similarly, a buy signal is generated when the price rises above the upper bollinger band, calculated as MA(20) + 2*SD(20).</p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940863/315caaf4-d991-11e3-8f6f-d29256c5155e.png" style="display: block;
     margin-left: auto;
     margin-right: auto"/>
-  <small><strong>Figure 1. Two trees representing one possible buy/sell strategy.</strong> This strategy uses Bollinger Bands, which are two indicators calculated as ± 20-day standard deviations from the 20-day moving average. One would (A) buy when the price falls below the lower bollinger band and (B) sell when the price goes above the upper Bollinger Band. </small>
+  <small><strong>Figure 4. Two trees representing one possible buy/sell strategy.</strong> This strategy uses Bollinger Bands, which are two indicators calculated as ± 20-day standard deviations from the 20-day moving average. One would (A) buy when the price falls below the lower bollinger band and (B) sell when the price goes above the upper Bollinger Band. </small>
   
 
-<p>To construct the trading strategy trees, a set of seven operations were defined (Table 1). These operations comprise the joining nodes, such as those represented by circles in Figure 1.
+<p>To construct the trading strategy trees, a set of seven operations were defined (Table 1). These operations comprise the joining nodes, such as those represented by circles in Figure 4.
 </p>
 
 <table cellpadding="0" cellspacing="0" class="c39"><tbody><tr class="c35"><td class="c26"><p class="c21"><span class="c1 c3">O</span><span class="c1 c3">perations</span></p></td><td class="c22"><p class="c21"><span class="c44 c1 c3">Input</span></p></td><td class="c36"><p class="c21"><span class="c1 c3 c44">Output</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Add (+)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">the vector sum</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Subtract (-)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">the vector difference (order dependence)</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Norm </span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">the absolute value of the vector difference </span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Multiply (x)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">a scalar and a time series vector</span></p></td><td class="c36"><p class="c10"><span class="c3 c2 c7">the scalar multiple of the time series vector</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c3 c2">Divide (</span><span class="c3 c2 c27">&divide;)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">each entry of the first vector is divided by the second (order dependence)</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Greater Than (&gt;)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">Boolean of entry-wise comparison (order dependence)</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Less Than (&lt;)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">Boolean of entry-wise comparison (order dependence)</span></p></td></tr></tbody></table>
@@ -132,7 +128,7 @@
   <strong>Table 1. Operations defined in the branching nodes (circles) of the trees.</strong> Two broad categories of operations were defined - those that output boolean vectors, and those that output real-valued vectors. Only operations within the same category were switched randomly during mutation. 
 </small>
 
-<p>Operations act on a set of indicators (Table 2), such as those represented by rectangles in Figure 1.
+<p>Operations act on a set of indicators (Table 2), such as those represented by rectangles in Figure 4.
 </p>
 
 <table cellpadding="0" cellspacing="0" class="c32"><tbody><tr class="c31"><td class="c15"><p class="c14"><span class="c1 c8 c13">Time Series</span></p></td><td class="c6"><p class="c14"><span class="c1 c8 c13 c22">Description</span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c9 c1 c8">Price</span></p></td><td class="c6"><p class="c17"><span class="c9 c1 c8">Daily adjusted closing prices, adjusted for dividends and splits. </span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c9 c1 c8">Volume</span></p></td><td class="c6"><p class="c17"><span class="c9 c1 c8">Daily trade volumes. </span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c1 c8">Diff(</span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">)</span></p></td><td class="c6"><p class="c17"><span class="c1 c8">The momentum over the past </span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">&nbsp;days. </span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c1 c8">MA(</span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">)</span></p></td><td class="c6"><p class="c17"><span class="c1 c8">The moving average over past </span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">&nbsp;days. </span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c1 c8">SD(</span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">)</span></p></td><td class="c6"><p class="c17"><span class="c1 c8">The moving standard deviation over the past </span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">&nbsp;days.</span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c1 c8">Min(</span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">)</span></p></td><td class="c6"><p class="c17"><span class="c1 c8">The minimum price of the past </span><span class="c3 c1 c8">n </span><span class="c9 c1 c8">days. </span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c1 c8">Max(</span><span class="c3 c1 c8">n</span><span class="c1 c8 c9">)</span></p></td><td class="c6"><p class="c17"><span class="c1 c8">The maximum price of the past </span><span class="c3 c1 c8">n </span><span class="c9 c1 c8">days. </span></p></td></tr><tr class="c12"><td class="c15"><p class="c17"><span class="c1 c8">Lag(</span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">)</span></p></td><td class="c6"><p class="c17"><span class="c1 c8">The price </span><span class="c3 c1 c8">n</span><span class="c9 c1 c8">&nbsp;days ago. </span></p></td></tr></tbody></table>
@@ -160,12 +156,12 @@
 
 <h4>Tree Similarity Calculation</h4>
 <p>To compare the trading strategies from each of the 312 GP runs, a similarity score was developed. Each buy and sell tree from each trading strategy was applied on 15000 days of S&P 500 historical data, producing a 15000 entry binary vector corresponding to buy/sell signals. The euclidian distance between these vectors were calculated for all pairwise tree comparisons. The additive inverse normalized distance was then used to generate a similarity score from 0 to 1. This “functional” comparison was rationalized because similar trees should, in principle, generate similar buy/sell signals. </p>
-<p>Figure 2 shows two buy trees (A&B) that were deemed similar (scoreAB = 0.940) and a third tree (C) that was deemed not similar compared to the other two (scoreAC = 0.0003, scoreBC = 0.0015). In broad strokes, one could rationalize why trees A and B might have been scored as similar. The root (top) node of tree B can be flipped such that the root operation of both trees A and B are “greater than” a certain volume lag. In addition, it is plausible that the current volume minus the minimum volume over the last three days (tree B) is an approximation of the standard deviation of volume over the last 8 days (tree A). Certainly, these trees produced very similar buy signals over the course of roughly 41 years on the S&P 500 index, suggesting that they are functionally similar even though it may be hard to intuitively rationalize why they would be. It is also clear that tree C is different from A and B because it includes price data that is combined with volume data.</p>
+<p>Figure 5 shows two buy trees (A&B) that were deemed similar (scoreAB = 0.940) and a third tree (C) that was deemed not similar compared to the other two (scoreAC = 0.0003, scoreBC = 0.0015). In broad strokes, one could rationalize why trees A and B might have been scored as similar. The root (top) node of tree B can be flipped such that the root operation of both trees A and B are “greater than” a certain volume lag. In addition, it is plausible that the current volume minus the minimum volume over the last three days (tree B) is an approximation of the standard deviation of volume over the last 8 days (tree A). Certainly, these trees produced very similar buy signals over the course of roughly 41 years on the S&P 500 index, suggesting that they are functionally similar even though it may be hard to intuitively rationalize why they would be. It is also clear that tree C is different from A and B because it includes price data that is combined with volume data.</p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940865/3161a518-d991-11e3-8d4b-e324c29cadfc.png"style="display: block;
     margin-left: auto;
     margin-right: auto"/>
-      <small><strong>Figure 2. Buy signal trees from trading strategies optimized with GP on tickers (A) AAPL, (B) ADM, and (C) AON.</strong> Trees A and B were scored as similar (scoreAB = 0.940) based on comparing the buy signal vectors on 15000 days of S&P index data.  Tree C was deemed different from the other two (scoreAC = 0.0003, scoreBC = 0.0015). 
+      <small><strong>Figure 5. Buy signal trees from trading strategies optimized with GP on tickers (A) AAPL, (B) ADM, and (C) AON.</strong> Trees A and B were scored as similar (scoreAB = 0.940) based on comparing the buy signal vectors on 15000 days of S&P index data.  Tree C was deemed different from the other two (scoreAC = 0.0003, scoreBC = 0.0015). 
  </small>
 
 
