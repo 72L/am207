@@ -23,16 +23,12 @@
       </header>
       <section>
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="intro-and-theory" class="anchor" href="#intro-and-theory"><span class="octicon octicon-link"></span></a>Introduction and Theory</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>Technical trading strategies are used to determine buy and sell signals based on time series stock data. In the purest sense, trading strategies operate with only input from time series data and do not consider fundamentals (i.e. balance sheets, news, income statements) used by analysts considering a company’s inherent value. Instead, trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. For example, one possible technical trading strategy could use the 200-day moving average (MA(200)) and the 50-day moving average (MA(50)) indicators. A buy signal is generated when the MA(50) crosses above the MA(200), signalling a recent upward trend. Conversely, a sell signal would be generated when the MA(50) crosses below the MA(200). Other commonly used indicators include moving window standard deviations and momentum, which is the price difference between the ends of a moving window.
+</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Trading strategies explored by academics have been met with varying levels of success. Ratner et al. tested a series of moving average trading strategies on different world markets, but found that transaction costs diminished most of the gains made relative to a buy-and-hold strategy [1]. Strictly speaking, technical trading strategies do not predict future prices. Rather, indicators are used to generate buy/sell signals in real time with present and historical data. Some researchers have combined methods of prediction with trading strategies to great success [2]; however, the current project will focus solely on trading strategies.</p>
 
 <h3>
 <a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
