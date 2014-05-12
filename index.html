@@ -68,15 +68,40 @@
 
 <p>Operations act on a set of indicators (Table 2), such as those represented by rectangles in Figure 1. The derived indicators were pre-calculated from the raw price or volume data before GP simulation. This allowed fast evaluation of the trading strategy trees. 
 </p>
-<p></p>
+<p>Moving windows used in the calculation of the derived time series were chosen from a truncated Fibonacci number set, where numbers above 10 continue to increase by multiples of 10 up to 365. This was chosen arbitrarily to limit the number of pre-calculated time series that had to be stored onto system memory. </p>
+<p>The simulation was initialized with a population of 300 identical Bollinger Band trading strategy tree pairs.  The set of 300 was mutated as described below to produce an initial population. The population size of 300 was kept constant.</p>
 
+<h4>Fitness</h4>
+
+<p>Given the buy and sell signals calculated from the trading strategies, the fitness function was determined by simulating the sequential buying and selling of one share of the stock. Thus, two consecutive buy signals would only result in one action - the first buy. “Lossless” trading behavior is implemented, where a sell signal is accepted only if there is profit to be made. </p>
+<p>The absolute return minus a small $0.01/stock transaction cost was used as a measure of fitness during evolution. The transaction cost was included to penalize strategies with too many transactions (overfitting), yet the cost was made small to limit this effect on the genetic algorithm. For data analysis of trees after GP selection, a more realistic 0.1% transaction cost was used (see below). </p>
+<p>To cross validate, the training set was split into 4 segments (2.5 years each), and the absolute return was calculated on each segment using the lossless trading behavior described above.  The minimum of the returns from the four segments was used as the fitness for the entire trading rule. At each time step or generation, trading strategies (represented as trees) were given probability to reproduce clones proportional to their respective fitness. The genetic algorithm was run for 500 generations for each stock ticker. </p>
+
+<h4>Mutation, Recombination, and Polyclonality</h4>
+<p>At the start of each generation, each trading strategy in the population was mutated with a certain probability. The mutations altered the trees by changing randomly the input indicators (Table 2) (probability = P = 0.1), the length of the moving window (P = 0.05), the constant of multiplication for the multiplication operator (P =  0.5, gaussian proposal distribution step size = 1), or the operations at the nodes (Table 1) (P = 0.05). Care was taken to ensure that nodes containing boolean operations remained boolean after mutation. </p>
+<p>Two types of recombination were defined and both recombination rules were each applied to 30 randomly selected pairs of trading strategies at each generation. The first type of recombination was performed by swapping sub-branches between the buy or the sell trees of each trading strategy. The second recombination defined was a simple swapping of entire buy or sell trees between any two trading strategies. </p>
+<p>Polyclonality is defined as the number of unique trading strategies in the population and was monitored over the course of evolution. When polyclonality dropped to 20 or below, the current population would be replaced by a population mutated from the most optimal solution in the evolutionary history. </p>
+
+<h4>Analysis of results</h4>
+<p>For each of the optimal trading strategies from each stock ticker GP run, a realistic return was calculated as the percent return in excess of a S&P 500 buy-and-hold strategy (+23.7% in the training period and +3.88% in the test period). A fixed 0.1% transaction cost was implemented per transaction, corresponding to a $7 fixed fee [13] from investing in batches of stocks worth $7000. We thus define the annualized adjusted excess return as the annualized percent return in excess of a buy-and-hold strategy on the S&P500 index in the same time period, minus a 0.1% transaction cost. </p>
+
+<h4>Tree Similarity Calculation</h4>
+<p>To compare the trading strategies from each of the 312 GP runs, a similarity score was developed. Each buy and sell tree from each trading strategy was applied on 15000 days of S&P 500 historical data, producing a 15000 entry binary vector corresponding to buy/sell signals. The euclidian distance between these vectors were calculated for all pairwise tree comparisons. The additive inverse normalized distance was then used to generate a similarity score from 0 to 1. This “functional” comparison was rationalized because similar trees should, in principle, generate similar buy/sell signals. </p>
+<p>Figure 2 shows two buy trees (A&B) that were deemed similar (scoreAB = 0.940) and a third tree (C) that was deemed not similar compared to the other two (scoreAC = 0.0003, scoreBC = 0.0015). In broad strokes, one could rationalize why trees A and B might have been scored as similar. The root (top) node of tree B can be flipped such that the root operation of both trees A and B are “greater than” a certain volume lag. In addition, it is plausible that the current volume minus the minimum volume over the last three days (tree B) is an approximation of the standard deviation of volume over the last 8 days (tree A). Certainly, these trees produced very similar buy signals over the course of roughly 41 years on the S&P 500 index, suggesting that they are functionally similar even though it may be hard to intuitively rationalize why they would be. It is also clear that tree C is different from A and B because it includes price data that is combined with volume data.</p>
+
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940865/3161a518-d991-11e3-8d4b-e324c29cadfc.png"/>
 
 
 
 <h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a name="results" class="anchor" href="#results"><span class="octicon octicon-link"></span></a>Results</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+
+
+
+
+
+
 
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
