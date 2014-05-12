@@ -15,6 +15,16 @@
 font-style: italic;
 }
 
+ul{
+  list-style: none;
+font-size: 17px;
+padding-left: 0px;
+}
+
+table{
+  font-size: 11px;
+}
+
 body {
   padding:50px;
   font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
