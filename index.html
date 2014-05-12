@@ -25,10 +25,23 @@
         <h3>
 <a name="intro-and-theory" class="anchor" href="#intro-and-theory"><span class="octicon octicon-link"></span></a>Introduction and Theory</h3>
 
+<h4>What are Trading Strategies?</h4>
+
 <p>Technical trading strategies are used to determine buy and sell signals based on time series stock data. In the purest sense, trading strategies operate with only input from time series data and do not consider fundamentals (i.e. balance sheets, news, income statements) used by analysts considering a company’s inherent value. Instead, trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. For example, one possible technical trading strategy could use the 200-day moving average (MA(200)) and the 50-day moving average (MA(50)) indicators. A buy signal is generated when the MA(50) crosses above the MA(200), signalling a recent upward trend. Conversely, a sell signal would be generated when the MA(50) crosses below the MA(200). Other commonly used indicators include moving window standard deviations and momentum, which is the price difference between the ends of a moving window.
 </p>
 
 <p>Trading strategies explored by academics have been met with varying levels of success. Ratner et al. tested a series of moving average trading strategies on different world markets, but found that transaction costs diminished most of the gains made relative to a buy-and-hold strategy [1]. Strictly speaking, technical trading strategies do not predict future prices. Rather, indicators are used to generate buy/sell signals in real time with present and historical data. Some researchers have combined methods of prediction with trading strategies to great success [2]; however, the current project will focus solely on trading strategies.</p>
+
+<h4>Motivation</h4>
+<p>The trading strategies described thus far have some heuristic rationalization because they were developed by humans. It is reasonable to posit, however, that successful trading rules should not be limited by human intuition or experience. This project addresses whether new, unintuitive, and profitable trading strategies can be discovered with a stochastic algorithm called genetic programming. New strategies generated this way may perhaps capture underlying, yet unknown trends in the market.</p>
+
+<h4>What is Genetic Programming?</h4>
+<p>Genetic algorithms optimize a fitness function by simulating natural selection. Members of a population, which represent candidate solutions, are mutated randomly over time. At each time step or generation, each member is given probability to reproduce clones proportional to their respective fitness. If designed well, over time, the population will achieve higher and higher fitness, eventually reaching the optimal point of the fitness function. </p>
+<p>Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways. Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
+<p>Genetic programming has been used extensively in the field of finance to generate and evaluate trading strategies, which are easily represented as trees (see below). GP has been used to generate trading strategies for US indices (S&P500 and Dow Jones Index) [6, 7, 8], Foreign exchange markets [9, 10], and individual Canadian stocks [11]. These studies were not able to obtain rules that provided consistent returns on a risk-adjusted basis, especially with transaction costs.</p>
+
+<h4>What did I do?</h4>
+<p>In this project, I use Genetic Programming to generate and evaluate trading strategies on individual S&P 500 stock tickers. Perhaps an approach that uses customized strategies for each stock in a portfolio will be able to better exploit market inefficiencies (and therefore achieve better returns) compared to a strategy that trades solely with the entire index.</p>
 
 <h3>
 <a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
