@@ -59,7 +59,19 @@
 <h4>Trading Strategy Tree Representation</h4>
 <p>A trading strategy is composed of two trees: one that encodes the buy signals and one that encodes the sell signals. For example, a possible trading strategy using Bollinger Bands [12] is represented by the two trees in the figure below. A sell signal is generated when the sell tree returns true. That is, the investor will sell when the price falls below the lower bollinger band, which is calculated as MA(20) - 2*SD(20) , where MA(x)  and SD(x) are the x-day moving window average and standard deviation, respectively. Similarly, a buy signal is generated when the price rises above the upper bollinger band, calculated as MA(20) + 2*SD(20).</p>
 
-<img src="./images/fig1.png"/>
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940863/315caaf4-d991-11e3-8f6f-d29256c5155e.png"/>
+
+<p>To construct the trading strategy trees, a set of seven operations were defined (Table 1). These operations comprise the joining nodes, such as those represented by circles in Figure 1.
+</p>
+
+<table cellpadding="0" cellspacing="0" class="c39"><tbody><tr class="c35"><td class="c26"><p class="c21"><span class="c1 c3">O</span><span class="c1 c3">perations</span></p></td><td class="c22"><p class="c21"><span class="c44 c1 c3">Input</span></p></td><td class="c36"><p class="c21"><span class="c1 c3 c44">Output</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Add (+)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">the vector sum</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Subtract (-)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">the vector difference (order dependence)</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Norm </span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">the absolute value of the vector difference </span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Multiply (x)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">a scalar and a time series vector</span></p></td><td class="c36"><p class="c10"><span class="c3 c2 c7">the scalar multiple of the time series vector</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c3 c2">Divide (</span><span class="c3 c2 c27">&divide;)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">each entry of the first vector is divided by the second (order dependence)</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Greater Than (&gt;)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">Boolean of entry-wise comparison (order dependence)</span></p></td></tr><tr class="c32"><td class="c26"><p class="c10"><span class="c7 c3 c2">Less Than (&lt;)</span></p></td><td class="c22"><p class="c10"><span class="c7 c3 c2">two time series vectors</span></p></td><td class="c36"><p class="c10"><span class="c7 c3 c2">Boolean of entry-wise comparison (order dependence)</span></p></td></tr></tbody></table>
+
+<p>Operations act on a set of indicators (Table 2), such as those represented by rectangles in Figure 1. The derived indicators were pre-calculated from the raw price or volume data before GP simulation. This allowed fast evaluation of the trading strategy trees. 
+</p>
+<p></p>
+
+
+
 
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
