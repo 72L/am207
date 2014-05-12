@@ -9,9 +9,8 @@
   .c14, .c21{
     font-weight: bold;
   }
-  h3{
-    text-transform: uppercase;
-  }
+
+
 .lead{
   font-size: 20px;
 font-style: italic;
@@ -61,6 +60,11 @@ h2 {
 h3, h4, h5, h6 {
   color:#494949;
 }
+
+
+h3{
+    text-transform: uppercase;
+  }
 
 a {
   color:#39c;
