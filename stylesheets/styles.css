@@ -3,7 +3,11 @@
 
 .c14, .c17, .c21, .c10{
   margin-bottom: 0px;
-  font-weight: bold;
+  
+  }
+  
+  .c17, .c21{
+    font-weight: bold;
   }
   
 
@@ -142,8 +146,9 @@ section {
 
 small {
 
-  font-size: 11px;
 margin-top: 10px;
+display: block;
+margin-bottom: 20px;
 }
 
 hr {
