@@ -37,18 +37,18 @@
 
 <h4>What are Trading Strategies?</h4>
 
-<p><span class="lead">Technical trading strategies are used to determine buy and sell signals based on time series stock data.</span> Trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. Typical indicators are moving average, momentum, and standard deviation. 
+<p><span class="lead">Technical trading strategies are used to determine buy and sell signals based on time series stock data.</span><br/> Trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. Typical indicators are moving average, momentum, and standard deviation. 
 </p>
 
 <p>Strictly speaking, technical trading strategies do not predict future prices. Rather, indicators are used to generate buy/sell signals in real time with present and historical data.</p>
 
 <h4>Motivation</h4>
-<p><span class="lead">Common trading strategies have some heuristic rationalization but successful trading rules should not be limited by human intuition or experience.</span> This project addresses whether new, unintuitive, and profitable trading strategies can be discovered with a stochastic algorithm called genetic programming. New strategies generated this way may perhaps capture underlying, yet unknown trends in the market.</p>
+<p><span class="lead">Common trading strategies have some heuristic rationalization but successful trading rules should not be limited by human intuition or experience.</span><br/> This project addresses whether new, unintuitive, and profitable trading strategies can be discovered with a stochastic algorithm called genetic programming. New strategies generated this way may perhaps capture underlying, yet unknown trends in the market.</p>
 
 <h4>What is Genetic Programming?</h4>
 <p>Genetic algorithms optimize a fitness function by simulating natural selection. Members of a population, which represent candidate solutions, are mutated randomly over time. At each time step or generation, each member is given probability to reproduce clones proportional to their respective fitness. If designed well, over time, the population will achieve higher and higher fitness, eventually reaching the optimal point of the fitness function. </p>
 
-<p><span class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</span> Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
+<p><span class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</span><br/> Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
 
 <p>Genetic programming has been used extensively in the field of finance to generate and evaluate trading strategies, which are easily represented as trees (see below). GP has been used to generate trading strategies for US indices (S&P500 and Dow Jones Index) [6, 7, 8], Foreign exchange markets [9, 10], and individual Canadian stocks [11]. These studies were not able to obtain rules that provided consistent returns on a risk-adjusted basis, especially with transaction costs.</p>
 
