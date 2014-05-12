@@ -61,7 +61,54 @@
 <a name="data" class="anchor" href="#data"><span class="octicon octicon-link"></span></a>Data</h3>
 
 <p>Historical daily adjusted closing prices and volumes from years 1999 to 2013 of stocks in the S&P 500 were downloaded from Yahoo! Finance. Only stocks with at least 15 years of history available on Yahoo! Finance were considered (n = 312). This allowed splitting of the time series data into a 10-year training set (1999 to 2008) and a 5-year test set (2009 to 2013). </p>
-<p>The Global Industry Classification Standard (GICS) sector labels given to each ticker were used for sector analysis. Our data set of 312 tickers contained 48 tickers from the Financials sector, 47 from Industrials, 42 from Consumer Discretionary, 34 from Health Care, 33 from Information Technology, 28 from Consumer Staples, 27 from Energy, 26 from Utilities, 23 from Materials, and 4 from Telecommunications Services. </p>
+
+<h3>
+<a name="results" class="anchor" href="#results"><span class="octicon octicon-link"></span></a>Results</h3>
+
+  <h4>Test and Training Set Returns</h4>
+<p class="lead">The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively.</p>
+<p>GP was run on historical data from 312 tickers listed in the S&P 500. Figure 4 shows the distributions of annualized adjusted excess returns of optimal trading strategies generated from the 10 year training period (horizontal histogram) and the 5 year test period (vertical histogram). The annualized adjusted excess return is the percent return, accounting for a 0.1% transaction cost, in excess of a buy-and-hold strategy on the S&P500 index in the same time period (S&P 500 performance: +23.7% in the training period and +3.88% in the test period).</p>
+
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940869/316b7822-d991-11e3-9460-632c718fd211.png"style="display: block;
+    margin-left: auto;
+    margin-right: auto"/>
+    <small><strong>Figure 4. Annualized adjusted excess returns from the test and training periods.</strong> Results are from the GP-generated optimal trading strategies from 312 tickers listed in the S&P 500. The difference in scale in the training set axis versus the test set axis indicates overfitting. However, both distributions of returns have means above 0%. 
+</small>
+ 
+<p>The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively. This indicates that there is some amount of overfitting present in the current form of the algorithm. However, the S&P 500 buy-and-hold strategy had a much greater return in the training period (23.7%) than in the test period (3.88%), suggesting that the training period (1999 to 2008) was a bull market. A bull market would give better returns in general for all trading strategies, which may partially (in addition to overfitting) explain higher yields for the training set.</p>   
+
+<h4>Returns by Sector</h4>
+<p class="lead">Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies</p>
+<p>Stock tickers were classified into sectors based on the GICS classification scheme. Figure 6 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
+
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940867/3166e438-d991-11e3-8c28-52b04f4f2903.png"style="display: block;
+    margin-left: auto;
+    margin-right: auto"/>
+    <small>
+      <strong>Figure 6. Annualized adjusted excess returns from stocks in each GICS sector.</strong> A kernel density estimate of the distribution is plotted, along with the actual returns from each ticker. Market inefficiency in each sector can be approximated by determining the extent to which the distribution is above the  0% return mark.     </small>
+  
+  
+<h4>Comparing the Trading Strategies</h4>
+<p class="lead">The most freqeuncy used indicators are volume-based.</p>
+<p>312 trading strategies (from 312 stock tickers), each with buy and sell signal-generating trees, were generated from the GP algorithms. The indicators that ended up being incorporated into the optimal buy and sell trees were compiled and counted (Figure 7). Interestingly, the volume lag indicators for 5, 13, and 33 days were very frequency used in sell trees, while the most frequently used indicators in the buy trees are volume SD(33) and price MA(13). Note that although the operations performed on these indicators higher up in the tree could be different, the fact that these are used frequently may be an indication of their usefulness. These specific indicators (which are surprisingly mostly based on volume) appear to hold the most information in terms of discovering market inefficiencies to exploit. </p>
+
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940864/315f9da4-d991-11e3-8ea0-06ea1b1f0cf5.png"style="display: block;
+    margin-left: auto;
+    margin-right: auto"/>
+    <smaLL><STRONG>Figure 7. The frequency of indicator use in buy and sell trees.</strong> Each point represents a specific indicator over a specific moving window length. The colors indicate the type of indicator, such as MA, or SD. The most highly used indicators are labeled with their specific descriptions. </smaLL>
+
+<h4>Broad tree classification</h4>
+<p class="lead">Buy and sell trees do not appear to cluster be sector or profitability.</p>
+<p>Since the trees varied in size, operations used, and indicators used, a simple, 1D similarity score was developed (see Approach section) to functionally compare the trees. Briefly, for each pairwise comparison of trees in the dataset, the similarity score was calculated using the buy/sell signals they generated on 41 years of S&P 500 price data. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 8). A graph was produced for the sell trees as well (not shown) and it was very similar. </p>
+
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940862/315a213a-d991-11e3-8f26-56106826a3f7.png"style="display: block;
+    margin-left: auto;
+    margin-right: auto"/>
+    <small><strong>Figure 8. Graph of buy trees linked by similarity.</strong> Each of the 312 nodes represent a stock ticker for which a buy tree was generated using GP. The weight of the edge represents how similar the trees are based on a similarity score (See Approach section). To better visualize clusters, edges with weights below 0.4 were eliminated from the graph. The size of each node represents the test period annualized adjusted return.</small>
+    
+<p>At least six clusters of buy trees are observed, and it is assumed that each of these clusters represent functionally groups of different trading strategies. Each node/ticker is sized by the test period annualized adjusted return and colored by sector. Buy and sell trees do not appear to cluster by sector, suggesting that the trading strategies may be specific to each stock ticker, rather than generalizable to that ticker’s sector. To test the appropriateness of this clustering algorithm, future work should focus on comparing the performance of buy rules used on stocks within a cluster and that for stocks outside the cluster.</p>
+<p>Trees also do not appear to cluster by size, indicating that successful returns do not come solely from a particular class of trading strategies. Rather, each of the type of trading strategy represented by each cluster yields variable success rates, probably more dependent on individual tickers. </p>
+
 
 
 
@@ -120,65 +167,6 @@
     margin-right: auto"/>
       <small><strong>Figure 2. Buy signal trees from trading strategies optimized with GP on tickers (A) AAPL, (B) ADM, and (C) AON.</strong> Trees A and B were scored as similar (scoreAB = 0.940) based on comparing the buy signal vectors on 15000 days of S&P index data.  Tree C was deemed different from the other two (scoreAC = 0.0003, scoreBC = 0.0015). 
  </small>
-
-
-<h3>
-<a name="results" class="anchor" href="#results"><span class="octicon octicon-link"></span></a>Results</h3>
-
-
-<h4>Typical GP Results on Single Stocks</h4>
-<p>Figure 3 shows GP parameters over time during a typical genetic evolution simulation. The training set fitness (top graph, blue line) generally increases over time, but the test set fitness (top graph, red line) does not rise. This is a sign of overfitting. However, the population mean fitnesses in the training and test sets remain similar until generation 60, where the mean training set fitness starts to rise above the mean test set fitness. This is another sign of overfitting, and indicates that the algorithm is not yet perfect; more work could be done to improve the GP algorithm. </p>
-Polyclonality in the time course shown remains relatively high, suggesting that the current mutations are relatively small. A higher mutation rate or more radical mutations could be introduced into the system in hope of achieving better trading strategies by taking larger leaps. </p>
-
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940868/316937e2-d991-11e3-975d-6ef34a8af34e.png"style="display: block;
-    margin-left: auto;
-    margin-right: auto"/>
-    <small><strong>Figure 3. Fitness and polyclonality over the course of the genetic programming algorithm on historical stock data from ticker AA.</strong> The blue line in the top graph shows the best trading strategy training set fitness at each generation, and the red line shows the same strategy’s test set fitness. The green and purple lines show the population mean training set and test set fitnesses, respectively. Polyclonality (the number of unique trading strategies) is shown in the second graph. </small>
-    
-<h4>Genetic Programming on Multiple Stocks</h4>
-<p>GP was run on historical data from 312 tickers listed in the S&P 500. Figure 4 shows the distributions of annualized adjusted excess returns of optimal trading strategies generated from the 10 year training period (horizontal histogram) and the 5 year test period (vertical histogram). The annualized adjusted excess return is the percent return, accounting for a 0.1% transaction cost, in excess of a buy-and-hold strategy on the S&P500 index in the same time period (S&P 500 performance: +23.7% in the training period and +3.88% in the test period).</p>
-
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940869/316b7822-d991-11e3-9460-632c718fd211.png"style="display: block;
-    margin-left: auto;
-    margin-right: auto"/>
-    <small><strong>Figure 4. Annualized adjusted excess returns from the test and training periods.</strong> Results are from the GP-generated optimal trading strategies from 312 tickers listed in the S&P 500. The difference in scale in the training set axis versus the test set axis indicates overfitting. However, both distributions of returns have means above 0%. 
-</small>
- 
-<p>The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively. This indicates that there is some amount of overfitting present in the current form of the algorithm. However, the S&P 500 buy-and-hold strategy had a much greater return in the training period (23.7%) than in the test period (3.88%), suggesting that the training period (1999 to 2008) was a bull market. A bull market would give better returns in general for all trading strategies, which may partially (in addition to overfitting) explain higher yields for the training set.</p>   
-<p>The semi-strong efficient market hypothesis (EMH) states that the prices at any one time is a reflection of all the available information about the company and the market [14]. Some claim the fact that specific technical strategies work disproves the EMH because consistent profits would indicate that there are market inefficiencies to exploit. It is intuitive to suppose that the market is more efficient for stocks that are well known and watched (high volume), while relatively inefficient for less well-known tickers. Using the trading rules optimized for each stock ticker, the returns from optimized trading strategies are shown versus average trade volume of each ticker (Figure 5).</p>
-
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940866/3164a222-d991-11e3-807d-33498940b169.png"style="display: block;
-    margin-left: auto;
-    margin-right: auto"/>
-    <small><strong>Figure 5. Annualized adjusted excess returns from the test period versus average daily trade volume.</strong> Each point represents annualized adjusted excess returns (in the range shown) from a GP-generated optimal trading rule. A kernel density estimate contour plot is overlaid.
-</small>
-    
-<p>The graph does not show a clear correlation between trading volume and return. However, the roughly triangular shape of the 2D distribution in Figure 5 may potentially suggest that stocks traded at higher volume contain higher market efficiency and are therefore less likely to result in higher returns. Indeed, restricting the portfolio to S&P tickers with average daily volumes under 1 million almost doubles the mean test period annualized adjusted excess return to 19.1%.</p> 
-<p>Stock tickers were classified into sectors based on the GICS classification scheme. Figure 6 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
-
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940867/3166e438-d991-11e3-8c28-52b04f4f2903.png"style="display: block;
-    margin-left: auto;
-    margin-right: auto"/>
-    <small>
-      <strong>Figure 6. Annualized adjusted excess returns from stocks in each GICS sector.</strong> A kernel density estimate of the distribution is plotted, along with the actual returns from each ticker. Market inefficiency in each sector can be approximated by determining the extent to which the distribution is above the  0% return mark.     </small>
-    
-<h4>Comparing the Trading Strategies</h4>
-<p>312 trading strategies (from 312 stock tickers), each with buy and sell signal-generating trees, were generated from the GP algorithms. The indicators that ended up being incorporated into the optimal buy and sell trees were compiled and counted (Figure 7). Interestingly, the volume lag indicators for 5, 13, and 33 days were very frequency used in sell trees, while the most frequently used indicators in the buy trees are volume SD(33) and price MA(13). Note that although the operations performed on these indicators higher up in the tree could be different, the fact that these are used frequently may be an indication of their usefulness. These specific indicators (which are surprisingly mostly based on volume) appear to hold the most information in terms of discovering market inefficiencies to exploit. </p>
-
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940864/315f9da4-d991-11e3-8ea0-06ea1b1f0cf5.png"style="display: block;
-    margin-left: auto;
-    margin-right: auto"/>
-    <smaLL><STRONG>Figure 7. The frequency of indicator use in buy and sell trees.</strong> Each point represents a specific indicator over a specific moving window length. The colors indicate the type of indicator, such as MA, or SD. The most highly used indicators are labeled with their specific descriptions. </smaLL>
-    
-<p>Since the trees varied in size, operations used, and indicators used, a simple, 1D similarity score was developed (see Approach section) to functionally compare the trees. Briefly, for each pairwise comparison of trees in the dataset, the similarity score was calculated using the buy/sell signals they generated on 41 years of S&P 500 price data. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 8). A graph was produced for the sell trees as well (not shown) and it was very similar. </p>
-
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940862/315a213a-d991-11e3-8f26-56106826a3f7.png"style="display: block;
-    margin-left: auto;
-    margin-right: auto"/>
-    <small><strong>Figure 8. Graph of buy trees linked by similarity.</strong> Each of the 312 nodes represent a stock ticker for which a buy tree was generated using GP. The weight of the edge represents how similar the trees are based on a similarity score (See Approach section). To better visualize clusters, edges with weights below 0.4 were eliminated from the graph. The size of each node represents the test period annualized adjusted return.</small>
-    
-<p>At least six clusters of buy trees are observed, and it is assumed that each of these clusters represent functionally groups of different trading strategies. Each node/ticker is sized by the test period annualized adjusted return and colored by sector. Buy and sell trees do not appear to cluster by sector (X2 = xx, p = xx), suggesting that the trading strategies may be specific to each stock ticker, rather than generalizable to that ticker’s sector. To test the appropriateness of this clustering algorithm, future work should focus on comparing the performance of buy rules used on stocks within a cluster and that for stocks outside the cluster.</p>
-<p>Trees also do not appear to cluster by size (X2 = xx, p = xx), indicating that successful returns do not come solely from a particular class of trading strategies. Rather, each of the type of trading strategy represented by each cluster yields variable success rates, probably more dependent on individual tickers. </p>
 
 
 
