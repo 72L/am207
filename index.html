@@ -59,7 +59,7 @@
 <h4>Trading Strategy Tree Representation</h4>
 <p>A trading strategy is composed of two trees: one that encodes the buy signals and one that encodes the sell signals. For example, a possible trading strategy using Bollinger Bands [12] is represented by the two trees in the figure below. A sell signal is generated when the sell tree returns true. That is, the investor will sell when the price falls below the lower bollinger band, which is calculated as MA(20) - 2*SD(20) , where MA(x)  and SD(x) are the x-day moving window average and standard deviation, respectively. Similarly, a buy signal is generated when the price rises above the upper bollinger band, calculated as MA(20) + 2*SD(20).</p>
 
-<img src="https://cloud.githubusercontent.com/assets/5567899/2940863/315caaf4-d991-11e3-8f6f-d29256c5155e.png"/>
+<img src="https://cloud.githubusercontent.com/assets/5567899/2940863/315caaf4-d991-11e3-8f6f-d29256c5155e.png" align="middle"/>
 
 <p>To construct the trading strategy trees, a set of seven operations were defined (Table 1). These operations comprise the joining nodes, such as those represented by circles in Figure 1.
 </p>
