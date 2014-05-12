@@ -134,9 +134,34 @@ Polyclonality in the time course shown remains relatively high, suggesting that 
 
 
 <h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a name="conc" class="anchor" href="#conc"><span class="octicon octicon-link"></span></a>Conclusions and Future Directions</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Genetic programming was used to select a set of trees that performed well on each of the 312 S&P 500 stock tickers studied. The annualized adjusted excess return is defined as the percentage return in excess of that from a buy-and-hold strategy on the S&P 500 index with a 0.1% transaction fee. Averaging over the portfolio of 312 trading strategies generated with GP, the mean annualized adjusted excess return is 105.6% and 11.4% in the training period and in the test period, respectively. </p>
+<p>Evidence of overfitting in the current model suggests that there is more model optimization and validation to be done. One way to approach the problem is to split the training data into more validation sets, which would reduce the tendency for a specific part of the training data to disproportionately affect the fitness. Another approach is to train the trading strategies on longer periods of training data, potentially giving the algorithm exposure to a greater range of price movement patterns. In order to improve the training and test set returns, more operations and indicators could be included, such as the Price-Earnings Ratio. Historic Price-Earnings Ratios are not provided by Yahoo! Finance, so it was not included in the current project due to time constraints. </p>
+<p>It would also be interesting to apply each generated trading strategy on stock tickers that were not used to train it. This would give an indication of how generalizable specific trading strategies are to other stock tickers and whether the GP overfit trading strategies to the ticker data used to train it. </p>
+<p>GP was shown to be a powerful method for selecting profitable trading strategies given a large number of operations and the resultant high dimension of possible trading strategy trees. The results suggest that indeed, a trading algorithm which customizes strategies to individual stocks of a portfolio is better able to exploit market inefficiencies compared to an algorithm that only optimizes over the combined index.   </p>
+  
+<h3>
+<a name="refs" class="anchor" href="#refs"><span class="octicon octicon-link"></span></a>References</h3>
+
+
+<ol>
+<li>Ratner, M., & Leal, R. P. (1999). Tests of technical trading strategies in the emerging equity markets of Latin America and Asia. <em>Journal of Banking & Finance, 23</em>(12), 1887-1905. </li>
+<li>Gencay, R. (1998). Optimization of technical trading strategies and the profitability in security markets. <em>Economics Letters, 59</em> (2), 249-254. </li>
+<li>El-Khateeb, E., Radi, A., El-Bakry, S. Y., & El-Bakry, M. Y. (2014). Modeling Hadronic Collisions Using Genetic Programming Approach. </li>
+<li>Elhenawy, M., Chen, H., & Rakha, H. A. (2014). Dynamic travel time prediction using data clustering and genetic programming. <em>Transportation Research Part C: Emerging Technologies, 42</em>, 82-98. </li>
+<li>Harvey, D., & Todd, M. (2014). Automated selection of damage detection features by genetic programming. In <em>Topics in Modal Analysis, Volume 7</em> (pp. 9-16). Springer New York. </li>
+<li>Allen, F., & Karjalainen, R. (1999). Using genetic algorithms to find technical trading strategies. <em>Journal of financial Economics, 51</em> (2), 245-271. </li>
+<li>Brock, W., Lakonishok, J., & LeBaron, B. (1992). Simple technical trading strategies and the stochastic properties of stock returns. <em>The Journal of Finance, 47</em> (5), 1731-1764. </li>
+<li>Chen, S. H., & Yeh, C. H. (1997). Toward a computable approach to the efficient market hypothesis: an application of genetic programming. <em>Journal of Economic Dynamics and Control, 21</em> (6), 1043-1063. </li>
+<li>Dempster, M. A. H., Payne, T. W., Romahi, Y., & Thompson, G. W. (2001). Computational learning techniques for intraday FX trading using popular technical indicators. <em>Neural Networks, IEEE Transactions on, 12</em> (4), 744-754. </li>
+<li>Neely, C., Weller, P., & Dittmar, R. (1997). Is technical analysis in the foreign exchange market profitable? A genetic programming approach. <em>Journal of Financial and Quantitative Analysis, 32</em> (04), 405-426. </li>
+<li>Potvin, J. Y., Soriano, P., & Vallée, M. (2004). Generating trading strategies on the stock markets with genetic programming. Computers & Operations Research, 31(7), 1033-1047. </li>
+<li>Bollinger, J. (2001). <em>Bollinger on Bollinger bands</em>. McGraw Hill Professional. </li>
+<li>Merrill Edge. (2014). Pricing. http://www.merrilledge.com/pricing</li>
+<li>Malkiel, B. G., & Fama, E. F. (1970). Efficient capital markets: A review of theory and empirical work*. <em>The journal of Finance, 25</em>(2), 383-417. </li>
+</ol>
+  
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/72L">72L</a></p>
