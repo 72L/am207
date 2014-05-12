@@ -34,30 +34,24 @@
         <h3>
 <a name="intro-and-theory" class="anchor" href="#intro-and-theory"><span class="octicon octicon-link"></span></a>Introduction and Theory</h3>
 
-<h4>What are Trading Strategies?</h4>
-
 <p class="lead">Technical trading strategies are used to determine buy and sell signals based on time series stock data.</p><p> Trading strategies employ indicators, which are derived time series calculated from raw price or volume time series data. Typical indicators are moving average, momentum, and standard deviation. 
 </p>
 
 <p>Strictly speaking, technical trading strategies do not predict future prices. Rather, indicators are used to generate buy/sell signals in real time with present and historical data.</p>
 
-<h4>Motivation</h4>
 <p class="lead">Common trading strategies have some heuristic rationalization but successful trading rules should not be limited by human intuition or experience.</p><p> This project addresses whether new, unintuitive, and profitable trading strategies can be discovered with a stochastic algorithm called genetic programming. New strategies generated this way may perhaps capture underlying, yet unknown trends in the market.</p>
 
-<h4>What is Genetic Programming?</h4>
 <p>Genetic algorithms optimize a fitness function by simulating natural selection. Members of a population, which represent candidate solutions, are mutated randomly over time. At each time step or generation, each member is given probability to reproduce clones proportional to their respective fitness. If designed well, over time, the population will achieve higher and higher fitness, eventually reaching the optimal point of the fitness function. </p>
 
 <p class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</p><p> Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
 
 <p>Genetic programming has been used extensively in the field of finance to generate and evaluate trading strategies, which are easily represented as trees (see below). GP has been used to generate trading strategies for US indices (S&P500 and Dow Jones Index) [6, 7, 8], Foreign exchange markets [9, 10], and individual Canadian stocks [11]. These studies were not able to obtain rules that provided consistent returns on a risk-adjusted basis, especially with transaction costs.</p>
 
-<h4>What did I do?</h4>
-<p>In this project, I use Genetic Programming to generate and evaluate trading strategies on individual S&P 500 stock tickers. Perhaps an approach that uses customized strategies for each stock in a portfolio will be able to better exploit market inefficiencies (and therefore achieve better returns) compared to a strategy that trades solely with the entire index.</p>
+<p class="lead">Genetic Programming was used to automatically generate and evaluate thousands of trading strategies on individual S&P 500 stock tickers.</p><p> Perhaps an approach that uses customized strategies for each stock in a portfolio will be able to better exploit market inefficiencies (and therefore achieve better returns) compared to a strategy that trades solely with the entire index.</p>
 
 <h3>
 <a name="results" class="anchor" href="#results"><span class="octicon octicon-link"></span></a>Results</h3>
 
-  <h4>Test and Training Set Returns</h4>
 <p class="lead">The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively.</p>
 <p>GP was run on historical data from 312 tickers listed in the S&P 500. Figure 4 shows the distributions of annualized adjusted excess returns of optimal trading strategies generated from the 10 year training period (horizontal histogram) and the 5 year test period (vertical histogram). The annualized adjusted excess return is the percent return, accounting for a 0.1% transaction cost, in excess of a buy-and-hold strategy on the S&P500 index in the same time period (S&P 500 performance: +23.7% in the training period and +3.88% in the test period).</p>
 
@@ -69,7 +63,6 @@
  
 <p>The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively. This indicates that there is some amount of overfitting present in the current form of the algorithm. However, the S&P 500 buy-and-hold strategy had a much greater return in the training period (23.7%) than in the test period (3.88%), suggesting that the training period (1999 to 2008) was a bull market. A bull market would give better returns in general for all trading strategies, which may partially (in addition to overfitting) explain higher yields for the training set.</p>   
 
-<h4>Returns by Sector</h4>
 <p class="lead">Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies</p>
 <p>Stock tickers were classified into sectors based on the GICS classification scheme. Figure 1 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
 
@@ -79,8 +72,6 @@
     <small>
       <strong>Figure 1. Annualized adjusted excess returns from stocks in each GICS sector.</strong> A kernel density estimate of the distribution is plotted, along with the actual returns from each ticker. Market inefficiency in each sector can be approximated by determining the extent to which the distribution is above the  0% return mark.     </small>
   
-  
-<h4>Comparing the Trading Strategies</h4>
 <p class="lead">The most freqeuncy used indicators are volume-based.</p>
 <p>312 trading strategies (from 312 stock tickers), each with buy and sell signal-generating trees, were generated from the GP algorithms. The indicators that ended up being incorporated into the optimal buy and sell trees were compiled and counted (Figure 2). Interestingly, the volume lag indicators for 5, 13, and 33 days were very frequency used in sell trees, while the most frequently used indicators in the buy trees are volume SD(33) and price MA(13). Note that although the operations performed on these indicators higher up in the tree could be different, the fact that these are used frequently may be an indication of their usefulness. These specific indicators (which are surprisingly mostly based on volume) appear to hold the most information in terms of discovering market inefficiencies to exploit. </p>
 
@@ -89,8 +80,7 @@
     margin-right: auto"/>
     <smaLL><STRONG>Figure 2. The frequency of indicator use in buy and sell trees.</strong> Each point represents a specific indicator over a specific moving window length. The colors indicate the type of indicator, such as MA, or SD. The most highly used indicators are labeled with their specific descriptions. </smaLL>
 
-<h4>Broad tree classification</h4>
-<p class="lead">Buy and sell trees do not appear to cluster be sector or profitability.</p>
+<p class="lead">Buy and sell trees do not appear to cluster by sector or profitability.</p>
 <p>Since the trees varied in size, operations used, and indicators used, a simple, 1D similarity score was developed (see Approach section) to functionally compare the trees. Briefly, for each pairwise comparison of trees in the dataset, the similarity score was calculated using the buy/sell signals they generated on 41 years of S&P 500 price data. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 3). A graph was produced for the sell trees as well (not shown) and it was very similar. </p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940862/315a213a-d991-11e3-8f26-56106826a3f7.png"style="display: block;
