@@ -133,8 +133,10 @@ section {
   padding-bottom:50px;
 }
 
-small {
-  font-size:11px;
+p small {
+
+  font-size: 11px;
+margin-top: 10px;
 }
 
 hr {
