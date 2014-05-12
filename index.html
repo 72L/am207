@@ -42,7 +42,7 @@
 
 <p>Genetic algorithms optimize a fitness function by simulating natural selection. Members of a population, which represent candidate solutions, are mutated randomly over time. At each time step or generation, each member is given probability to reproduce clones proportional to their respective fitness. Over time, the population will achieve higher and higher fitness, eventually reaching the optimal point of the fitness function. </p>
 
-<p class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</p><p> Programs are represented as trees, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
+<p class="lead">Genetic programming (GP), a type genetic algorithm, optimizes a set of rules or programs that transform data in highly non-linear ways.</p><p> Programs are represented as <a href="#trees">trees</a>, where each node is an operation performed with the two subtrees of data below it. Results of each operation node are successively combined from the bottom up. The final dataset is the output of the highest level node, processed by all the operations below it. Recent studies have applied the genetic programming framework to model hadronic collisions [3], predict travel time [4], and predict the consumption of natural gas [5]. </p>
 
 <p>Genetic programming has been used extensively in the field of finance to generate and evaluate trading strategies, which are easily represented as trees (see below). GP has been used to generate trading strategies for US indices (S&P500 and Dow Jones Index) [6, 7, 8], Foreign exchange markets [9, 10], and individual Canadian stocks [11]. These studies were not able to obtain rules that provided consistent returns on a risk-adjusted basis, especially with transaction costs.</p>
 
@@ -52,7 +52,7 @@
 <a name="results" class="anchor" href="#results"><span class="octicon octicon-link"></span></a>Results</h3>
 
 <p class="lead">The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively.</p>
-<p>GP was run on historical data from 312 tickers listed in the S&P 500. Figure 1 shows the distributions of annualized adjusted excess returns of optimal trading strategies generated from the 10 year training period (horizontal histogram) and the 5 year test period (vertical histogram).</p>
+<p>GP was run on historical data from <a href="data">312 tickers</a> listed in the S&P 500. Figure 1 shows the distributions of <a href="aaer">annualized adjusted excess returns</a> of optimal trading strategies generated from the 10 year training period (horizontal histogram) and the 5 year test period (vertical histogram).</p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940869/316b7822-d991-11e3-9460-632c718fd211.png"style="display: block;
     margin-left: auto;
@@ -63,7 +63,7 @@
 <p>The mean annualized adjusted excess return is 105.6% and 11.4% from the training period and the test period, respectively. This indicates that there is some amount of overfitting present in the current form of the algorithm. However, the S&P 500 buy-and-hold strategy had a much greater return in the training period (23.7%) than in the test period (3.88%), suggesting that the training period (1999 to 2008) was a bull market. A bull market would give better returns in general for all trading strategies, which may partially (in addition to overfitting) explain higher yields for the training set.</p>   
 
 <p class="lead">Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies.</p>
-<p>Stock tickers were classified into sectors based on the GICS classification scheme. Figure 2 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
+<p>Stock tickers were classified into sectors based on the <a href="http://www.msci.com/products/indexes/sector/gics/">GICS classification scheme</a>. Figure 2 shows the annualized adjusted excess returns from all tickers in each sector, along with a kernel density estimate of their distribution. It appears that the Consumer Staples, Materials, Health Care, and Utilities sectors contain the most market inefficiencies because the mean of the distribution of returns clearly appear higher than 0%. </p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940867/3166e438-d991-11e3-8c28-52b04f4f2903.png"style="display: block;
     margin-left: auto;
@@ -80,7 +80,7 @@
     <smaLL><STRONG>Figure 3. The frequency of indicator use in buy and sell trees.</strong> Each point represents a specific indicator over a specific moving window length. The colors indicate the type of indicator, such as MA, or SD. The most highly used indicators are labeled with their specific descriptions. </smaLL>
 
 <p class="lead">Buy and sell trees do not appear to cluster by sector or profitability.</p>
-<p>Since the trees varied in size, operations used, and indicators used, a simple, 1D similarity score was developed to functionally compare the trees. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 4). </p>
+<p>Since the trees varied in size, operations used, and indicators used, a simple, 1D <a href="#sim">similarity score</a> was developed to functionally compare the trees. Using the similarities as edge weights on a graph where nodes represent trees, the ensemble of 312 buy trees were visualized (Figure 4). </p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940862/315a213a-d991-11e3-8f26-56106826a3f7.png"style="display: block;
     margin-left: auto;
@@ -96,11 +96,11 @@
 <h3>
 <a name="approach" class="anchor" href="#approach"><span class="octicon octicon-link"></span></a>Methods</h3>
 
-<h4>Data</h4>
+<h4><a name="data" class="anchor" href="#data"></a>Data</h4>
 
 <p>Historical daily adjusted closing prices and volumes from years 1999 to 2013 of stocks in the S&P 500 were downloaded from Yahoo! Finance. Only stocks with at least 15 years of history available on Yahoo! Finance were considered (n = 312). This allowed splitting of the time series data into a 10-year training set (1999 to 2008) and a 5-year test set (2009 to 2013). </p>
 
-<h4>Trading Strategy Tree Representation</h4>
+<h4><a name="trees" class="anchor" href="#trees"></a>Trading Strategy Tree Representation</h4>
 <p>A trading strategy is composed of two trees: one that encodes the buy signals and one that encodes the sell signals. For example, a possible trading strategy using Bollinger Bands [12] is represented by the two trees in the figure below. A sell signal is generated when the sell tree returns true. That is, the investor will sell when the price falls below the lower bollinger band, which is calculated as MA(20) - 2*SD(20) , where MA(x)  and SD(x) are the x-day moving window average and standard deviation, respectively. Similarly, a buy signal is generated when the price rises above the upper bollinger band, calculated as MA(20) + 2*SD(20).</p>
 
 <img src="https://cloud.githubusercontent.com/assets/5567899/2940863/315caaf4-d991-11e3-8f6f-d29256c5155e.png" style="display: block;
@@ -139,10 +139,10 @@
 <p>At the start of each generation, each trading strategy in the population was mutated with a certain probability. The mutations altered the trees by changing randomly the input indicators (Table 2) (probability = P = 0.1), the length of the moving window (P = 0.05), the constant of multiplication for the multiplication operator (P =  0.5, gaussian proposal distribution step size = 1), or the operations at the nodes (Table 1) (P = 0.05). Care was taken to ensure that nodes containing boolean operations remained boolean after mutation. </p>
 <p>Two types of recombination were defined and both recombination rules were each applied to 30 randomly selected pairs of trading strategies at each generation. The first type of recombination was performed by swapping sub-branches between the buy or the sell trees of each trading strategy. The second recombination defined was a simple swapping of entire buy or sell trees between any two trading strategies. </p>
 
-<h4>Analysis of results</h4>
+<h4><a name="aaer" class="anchor" href="#aaer"></a>Analysis of results</h4>
 <p>For each of the optimal trading strategies from each stock ticker GP run, a realistic return was calculated as the percent return in excess of a S&P 500 buy-and-hold strategy (+23.7% in the training period and +3.88% in the test period). A fixed 0.1% transaction cost was implemented per transaction, corresponding to a $7 fixed fee [13] from investing in batches of stocks worth $7000. We thus define the <strong>annualized adjusted excess return</strong> as the annualized percent return in excess of a buy-and-hold strategy on the S&P500 index in the same time period, minus a 0.1% transaction cost. </p>
 
-<h4>Tree Similarity Calculation</h4>
+<h4><a name="sim" class="anchor" href="#sim"></a>Tree Similarity Calculation</h4>
 <p>To compare the trading strategies from each of the 312 GP runs, a similarity score was developed. Each buy and sell tree from each trading strategy was applied on 15000 days of S&P 500 historical data, producing a 15000 entry binary vector corresponding to buy/sell signals. The euclidian distance between these vectors were calculated for all pairwise tree comparisons. The additive inverse normalized distance was then used to generate a similarity score from 0 to 1. This “functional” comparison was rationalized because similar trees should, in principle, generate similar buy/sell signals. </p>
 <p>Figure 6 shows two buy trees (A&B) that were deemed similar (scoreAB = 0.940) and a third tree (C) that was deemed not similar compared to the other two (scoreAC = 0.0003, scoreBC = 0.0015). In broad strokes, one could rationalize why trees A and B might have been scored as similar. The root (top) node of tree B can be flipped such that the root operation of both trees A and B are “greater than” a certain volume lag. In addition, it is plausible that the current volume minus the minimum volume over the last three days (tree B) is an approximation of the standard deviation of volume over the last 8 days (tree A). Certainly, these trees produced very similar buy signals over the course of roughly 41 years on the S&P 500 index, suggesting that they are functionally similar even though it may be hard to intuitively rationalize why they would be. It is also clear that tree C is different from A and B because it includes price data that is combined with volume data.</p>
 
