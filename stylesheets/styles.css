@@ -1,9 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
 
-.c14, .c17{
+.c14, .c17, .c21, .c10{
   margin-bottom: 0px;
+  font-weight: bold;
   }
+  
 
 body {
   padding:50px;
