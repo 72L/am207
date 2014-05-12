@@ -10,6 +10,10 @@
     font-weight: bold;
   }
   
+.lead{
+  font-size: 20px;
+font-style: italic;
+}
 
 body {
   padding:50px;
